@@ -47,6 +47,13 @@ public abstract class BaseBehavior : MonoBehaviour {
         }
     }
     private PixelPerfectCamera pixelPerfectCameraRef = null;
+
+    protected Rigidbody2D RigidBody {
+        get {
+            return GetComponentOrNull(ref rigidBodyRef);
+        }
+    }
+    private Rigidbody2D rigidBodyRef = null;
     #endregion
 
     #region Helpful wrapper properties
@@ -131,15 +138,15 @@ public abstract class BaseBehavior : MonoBehaviour {
 
     // Unity fixed update function.
     private void FixedUpdate() {
-        OnFixedUpdate(Time.deltaTime);
+        OnFixedUpdate(TimeSpan.FromSeconds(Time.deltaTime));
     }
 
     /// <summary>
     /// Override this function to define actions to take when Unity make a call to FixedUpdate().
     /// This function is called every frame, if one is set.
     /// </summary>
-    /// <param name="delta">The time in seconds since the last call to this function.</param>
-    protected virtual void OnFixedUpdate(float delta) { }
+    /// <param name="delta">A TimeSpan representing the time in seconds since the last call of this function.</param>
+    protected virtual void OnFixedUpdate(TimeSpan delta) { }
 
     /// <summary>
     /// Override this function if you need to know when the collider/rigidbody of this object intersects with another.
